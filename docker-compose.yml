@@ -1,0 +1,9 @@
+services:
+  postgres_logs_operacao:
+    container_name: postgres_exemplo_crud
+    image: postgres:12.2
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
