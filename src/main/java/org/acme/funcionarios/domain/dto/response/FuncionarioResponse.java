@@ -12,5 +12,6 @@ public class FuncionarioResponse {
     private Long id;
     private String cpf;
     private String nome;
+    private Double salario;
     
 }

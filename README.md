@@ -1,62 +1,55 @@
-# exemplo-crud
+# Executando o projeto
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Execute o docker;
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+Abra o prompt de comando e navegue até a pasta do projeto;
 
-## Running the application in dev mode
-
-You can run your application in dev mode that enables live coding using:
-
+Digite o seguinte comando para baixar a imagem do postgres e subir o banco:
 ```shell script
-./mvnw compile quarkus:dev
+docker compose up
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
-
-## Packaging and running the application
-
-The application can be packaged using:
+Abra um client de banco de dados, crie uma conexão com postgres e depois crie a tabela funcionarios conforme o script.
 
 ```shell script
-./mvnw package
+CREATE TABLE public.funcionario(
+	id BIGINT NOT NULL,
+	cpf VARCHAR(20) NOT NULL,
+	nome VARCHAR(100) NOT NULL,
+	salario DECIMAL(10, 2) NOT NULL,
+	PRIMARY KEY (id)
+)
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+Abra outro prompt de comando e navegue até a pasta do projeto
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+Digite o seguinte comando para subir a aplicação: 
+```shell script
+mvn quarkus:dev
+```
 
-If you want to build an _über-jar_, execute the following command:
+# Inserindo um funcionário
+URL: http://localhost:8080/funcionarios
+
+VERBO: POST
+
+BODY:
 
 ```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+{
+    "id": 1,
+    "cpf": "706.197.001-49",
+    "nome": "Alisson Melo Nascimento",
+    "salario": 10000
+}
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+# Detalhando um funcionário
+URL: http://localhost:8080/funcionarios/1
 
-## Creating a native executable
+VERBO: GET
 
-You can create a native executable using:
+# Listando todos os funcionários
+URL: http://localhost:8080/funcionarios
 
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/exemplo-crud-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Provided Code
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+VERBO: GET

@@ -35,6 +35,7 @@ public class FuncionarioRepositoryImpl implements FuncionarioRepository{
                                 .id(rs.getLong("id"))
                                 .cpf(rs.getString("cpf"))
                                 .nome(rs.getString("nome"))
+                                .salario(rs.getDouble("salario"))
                             .build()
                     );
                 }
@@ -60,6 +61,7 @@ public class FuncionarioRepositoryImpl implements FuncionarioRepository{
                             .id(rs.getLong("id"))
                             .cpf(rs.getString("cpf"))
                             .nome(rs.getString("nome"))
+                            .salario(rs.getDouble("salario"))
                         .build()
                 );
 
@@ -75,11 +77,12 @@ public class FuncionarioRepositoryImpl implements FuncionarioRepository{
     public FuncionarioResponse persist(FuncionarioRequest funcionario) {
 
         try (var con = datasource.getConnection();
-             PreparedStatement ps = con.prepareStatement(" insert into public.funcionario(id, cpf, nome) values(?, ?, ?) ");) {
+             PreparedStatement ps = con.prepareStatement(" insert into public.funcionario(id, cpf, nome, salario) values(?, ?, ?, ?) ");) {
 
              ps.setLong(1, funcionario.getId());
              ps.setString(2, funcionario.getCpf());
              ps.setString(3, funcionario.getNome());
+             ps.setDouble(4, funcionario.getSalario());
 
              ps.executeUpdate();
 
@@ -88,7 +91,7 @@ public class FuncionarioRepositoryImpl implements FuncionarioRepository{
         }
 
         return FuncionarioResponse.builder().id(funcionario.getId()).cpf(funcionario.getCpf())
-                .nome(funcionario.getNome()).build();
+                .nome(funcionario.getNome()).salario(funcionario.getSalario()).build();
     }
     
 }

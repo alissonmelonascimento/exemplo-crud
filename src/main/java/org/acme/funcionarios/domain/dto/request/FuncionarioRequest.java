@@ -1,5 +1,6 @@
 package org.acme.funcionarios.domain.dto.request;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -23,5 +24,9 @@ public class FuncionarioRequest {
 
     @NotBlank(message = "Informe o nome do funcionário")
     private String nome;
+
+    @NotNull(message = "Infomer o salário")
+    @Min(value = 1, message = "Informe um salário diferente de zero")
+    private Double salario;
     
 }
